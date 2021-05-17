@@ -60,25 +60,35 @@ class board
         }
         return;
     }
+    void printboard()
+    {
+        vector<pair<int,int>>::iterator itr;
+        cout<<"\nSnakes are: \n";
+        int slno=1;
+        for(itr=snake.begin();itr!=snake.end();itr++,slno++)   cout<<slno<<" "<<itr->second<<" to "<<itr->first<<"\n";
+        slno=1;
+        cout<<"\nLadders are: \n";
+        for(itr=ladder.begin();itr!=ladder.end();itr++,slno++)   cout<<slno<<" "<<itr->first<<" to "<<itr->second<<"\n";
+        return;
+    }
     protected:
         int size=100;
-        vector<int> p;
         vector<pair<int,int>> snake,ladder;
     public:
         void makeboard(int s)
         {
             int choice=0;
-            for(int i=0;i<s;++i)  p.push_back(0);
             while(1)
-            {   cout<<"\nMake your custom board using this menu/n1.Add snake/n 2.Delete snake/n3.Add ladder/n4.Delete ladder/n5.Go back\n\n";
+            {   cout<<"\nMake your custom board using this menu\n1.Add snake\n2.Delete snake\n3.Add ladder\n4.Delete ladder\n5.Display snakes and ladders \n6.Go back\n\n";
                 cin>>choice;
-                switch(choice)
+                //switch(choice)
                 {
-                    case '1': add(-1);
-                    case '2': del(-1);
-                    case '3': add(1);
-                    case '4': del(1);
-                    case '5': return;
+                    if(choice==1) add(-1);
+                    if(choice==2) del(-1);
+                    if(choice==3) add(1);
+                    if(choice==4) del(1);
+                    if(choice==6) return;
+                    if(choice==5) printboard();
                 }
             }
         }
@@ -95,23 +105,9 @@ class board
         }
         else 
         {
-            for(int i=0;i<100;++i) p.push_back(0);
-            snake.push_back(make_pair(79,98));
-            snake.push_back(make_pair(75,95));
-            snake.push_back(make_pair(73,93));
-            snake.push_back(make_pair(36,87));
-            snake.push_back(make_pair(60,64));
-            snake.push_back(make_pair(19,62));
-            snake.push_back(make_pair(34,54));
-            snake.push_back(make_pair(7,17));
-            ladder.push_back(make_pair(80,99));
-            ladder.push_back(make_pair(72,91));
-            ladder.push_back(make_pair(28,84));
-            ladder.push_back(make_pair(51,67));
-            ladder.push_back(make_pair(21,43));
-            ladder.push_back(make_pair(2,38));
-            ladder.push_back(make_pair(9,31));
-            ladder.push_back(make_pair(4,14));
+            //for(int i=0;i<100;++i) p.push_back(0);
+            snake.push_back(make_pair(79,98));snake.push_back(make_pair(75,95));snake.push_back(make_pair(73,93));snake.push_back(make_pair(36,87));snake.push_back(make_pair(60,64));snake.push_back(make_pair(19,62));snake.push_back(make_pair(34,54));snake.push_back(make_pair(7,17));
+            ladder.push_back(make_pair(80,99));ladder.push_back(make_pair(72,91));ladder.push_back(make_pair(28,84));ladder.push_back(make_pair(51,67));ladder.push_back(make_pair(21,43));ladder.push_back(make_pair(2,38));ladder.push_back(make_pair(9,31));ladder.push_back(make_pair(4,14));
         }
     }
 };
@@ -127,7 +123,7 @@ class game:public board
             t++;
         }
         //clrscr();
-        cout<<"\n\n\n\n\n\n\n\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;
+        cout<<"\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;
         return;
     }
     int turn(int turnno)
@@ -181,7 +177,9 @@ class game:public board
         int noofplayers;
         cout<<"\n\n\n\n\n\nEnter number of players\n";
         cin>>noofplayers;
-        for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));
+        if(noofplayers==0) ;
+        else {
+        for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));}
         match();
     }
 };
@@ -189,10 +187,10 @@ int main()
 {
     srand(59732893);
     int in=1;
-    while(in)
+    while(in==1)
     {
         game G;
-        cout<<"Thank you for playing snakes and ladders\nTo start a new game enter 1\nTo exit press any other key\n\n\nGame developed by Aditya Subramanian\n\n\n\n";
+        cout<<"\nThank you for playing snakes and ladders\n\nTo start a new game enter 1\nTo exit press any other key\n\n\nGame developed by Aditya Subramanian\n\n\n\n";
         cin>>in;
     }
     return 0;
