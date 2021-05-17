@@ -2,9 +2,9 @@
 //#include<ctime>
 //#include<conio>
 using namespace std;
-class board
+class board                         //class for the board
 {  
-    void add(int i)
+    void add(int i)                 //to add snakes or ladders in your personallized board
     {
         int start,end;
         cout<<"\nAdd a ";
@@ -23,7 +23,7 @@ class board
         if(i==-1)   snake.push_back(make_pair(start,end));
         return;
     }
-    void del(int i)
+    void del(int i)             //to delete snakes or laddes in your personalized board
     {
         vector<pair<int,int>>::iterator itr;
         int slno=1,choice;
@@ -60,7 +60,7 @@ class board
         }
         return;
     }
-    void printboard()
+    void printboard()           //prints all the snakes and ladders
     {
         vector<pair<int,int>>::iterator itr;
         cout<<"\nSnakes are: \n";
@@ -71,27 +71,27 @@ class board
         for(itr=ladder.begin();itr!=ladder.end();itr++,slno++)   cout<<slno<<" "<<itr->first<<" to "<<itr->second<<"\n";
         return;
     }
-    protected:
+    void makeboard(int s)                       //function to make a custom board
+    {
+        int choice=0;
+        while(1)
+        {   cout<<"\nMake your custom board using this menu\n1.Add snake\n2.Delete snake\n3.Add ladder\n4.Delete ladder\n5.Display snakes and ladders \n6.Go back\n\n";
+            cin>>choice;
+            //switch(choice)
+            {
+                if(choice==1) add(-1);
+                if(choice==2) del(-1);
+                if(choice==3) add(1);
+                if(choice==4) del(1);
+                if(choice==6) return;
+                if(choice==5) printboard();
+            }
+        }
+    }
+    protected:                                      //to inherit into class game
         int size=100;
         vector<pair<int,int>> snake,ladder;
     public:
-        void makeboard(int s)
-        {
-            int choice=0;
-            while(1)
-            {   cout<<"\nMake your custom board using this menu\n1.Add snake\n2.Delete snake\n3.Add ladder\n4.Delete ladder\n5.Display snakes and ladders \n6.Go back\n\n";
-                cin>>choice;
-                //switch(choice)
-                {
-                    if(choice==1) add(-1);
-                    if(choice==2) del(-1);
-                    if(choice==3) add(1);
-                    if(choice==4) del(1);
-                    if(choice==6) return;
-                    if(choice==5) printboard();
-                }
-            }
-        }
     board()
     {
         int choice;
@@ -101,11 +101,10 @@ class board
         {
             cout<<"\n Enter size of board\n";
             cin>>size;
-            makeboard(size);
+            makeboard(size);    //call to make a custom board
         }
-        else 
+        else    // hardcoding to make a pre-set board
         {
-            //for(int i=0;i<100;++i) p.push_back(0);
             snake.push_back(make_pair(79,98));snake.push_back(make_pair(75,95));snake.push_back(make_pair(73,93));snake.push_back(make_pair(36,87));snake.push_back(make_pair(60,64));snake.push_back(make_pair(19,62));snake.push_back(make_pair(34,54));snake.push_back(make_pair(7,17));
             ladder.push_back(make_pair(80,99));ladder.push_back(make_pair(72,91));ladder.push_back(make_pair(28,84));ladder.push_back(make_pair(51,67));ladder.push_back(make_pair(21,43));ladder.push_back(make_pair(2,38));ladder.push_back(make_pair(9,31));ladder.push_back(make_pair(4,14));
         }
@@ -114,7 +113,7 @@ class board
 class game:public board
 {
     vector<pair<int,int>> player;
-    void match()
+    void match()                                        //a match
     {
         int t=2,k=turn(1);
         while(k==0)
@@ -123,10 +122,10 @@ class game:public board
             t++;
         }
         //clrscr();
-        cout<<"\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;
+        cout<<"\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;             //could add this in a destructor if you want to but I wrote it here
         return;
     }
-    int turn(int turnno)
+    int turn(int turnno)                                //a turn
     {
         int die;
         char dummy;
@@ -139,7 +138,7 @@ class game:public board
             //clrscr();
             cout<<"\n\n\n\n\n\nPlayer "<<itr_p->first<<"\'s turn\nPress any key to roll dice\n";
             cin>>dummy;
-            die=rand();
+            die=rand();             //tried by giving limiting coditions, forgot how to, so worked around it
             die=die%6+1;
             cout<<"\nInitial position: "<<itr_p->second<<" Dice roll: "<<die;//<<"New position: "<<(itr_p->second+die);
             cout<<"\nPress any key to continue\n";
@@ -177,15 +176,15 @@ class game:public board
         int noofplayers;
         cout<<"\n\n\n\n\n\nEnter number of players\n";
         cin>>noofplayers;
-        if(noofplayers==0) ;
+        if(noofplayers==0) ;        //if you dont wanna play the code wont run :0
         else {
         for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));}
         match();
     }
 };
-int main()
+int main()                      //pretty much has nothing in it, just calls game's constructor
 {
-    srand(59732893);
+    srand(59732893);            //tried doing seed value by time, forgot how to, worked around it
     int in=1;
     while(in==1)
     {
