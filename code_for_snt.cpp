@@ -1,4 +1,6 @@
 #include<bits/stdc++.h>
+//#include<ctime>
+//#include<conio>
 using namespace std;
 class board
 {  
@@ -17,13 +19,13 @@ class board
             start=x;
             if(end>size){cout<<"\nError cannot excede size of board\n";return;}
         }
-        if(i==1)    ladder.push_back(<start,end>);
-        if(i==-1)   snake.push_back(<start,end>);
+        if(i==1)    ladder.push_back(make_pair(start,end));
+        if(i==-1)   snake.push_back(make_pair(start,end));
         return;
     }
     void del(int i)
     {
-        vec<pair<int,int>>::iterator itr;
+        vector<pair<int,int>>::iterator itr;
         int slno=1,choice;
         cout<<"\nChoose which one you want to delete from this list\nEnter only the Sl.no\n\n";
         if(i==1)
@@ -34,7 +36,7 @@ class board
             if(choice>slno)
             {
                 cout<<"\nError sl no inncorrect\n";
-                return 0;
+                return;
             }
             itr=ladder.begin();
             itr+=choice-1;
@@ -49,7 +51,7 @@ class board
             if(choice>slno)
             {
                 cout<<"\nError sl no inncorrect\n";
-                return 0;
+                return;
             }
             itr=snake.begin();
             itr+=choice-1;
@@ -61,7 +63,7 @@ class board
     protected:
         int size=100;
         vector<int> p;
-        vec<pair<int,int>> snake,ladder;
+        vector<pair<int,int>> snake,ladder;
     public:
         void makeboard(int s)
         {
@@ -93,16 +95,29 @@ class board
         }
         else 
         {
-            for(int i=0;i<100;++i) p.push_back(0)
-            snake.push_back(<79,98>);snake.push_back(<75,95>);snake.push_back(<73,93>);snake.push_back(<36,87>);snake.push_back(<60,64>);snake.push_back(<19,62>);snake.push_back(<34,54>);snake.push_back(<7,17>);
-            ladder.push_back(<80,99>);ladder.push_back(<72,91>);ladder.push_back(<28,84>);ladder.push_back(<51,67>);ladder.push_back(<21,43>);ladder.push_back(<2,38>);ladder.push_back(<9,31>);ladder.push_back(<4,14>);
+            for(int i=0;i<100;++i) p.push_back(0);
+            snake.push_back(make_pair(79,98));
+            snake.push_back(make_pair(75,95));
+            snake.push_back(make_pair(73,93));
+            snake.push_back(make_pair(36,87));
+            snake.push_back(make_pair(60,64));
+            snake.push_back(make_pair(19,62));
+            snake.push_back(make_pair(34,54));
+            snake.push_back(make_pair(7,17));
+            ladder.push_back(make_pair(80,99));
+            ladder.push_back(make_pair(72,91));
+            ladder.push_back(make_pair(28,84));
+            ladder.push_back(make_pair(51,67));
+            ladder.push_back(make_pair(21,43));
+            ladder.push_back(make_pair(2,38));
+            ladder.push_back(make_pair(9,31));
+            ladder.push_back(make_pair(4,14));
         }
     }
-}
-class game
+};
+class game:public board
 {
-    board B;
-    vec<pair<int,int> player;
+    vector<pair<int,int>> player;
     void match()
     {
         int t=2,k=turn(1);
@@ -111,31 +126,32 @@ class game
             k=turn(t);
             t++;
         }
-        clrscr();
-        cout<<"The winner is player "<<k<<"\nTotal turns played are "<<t;
+        //clrscr();
+        cout<<"\n\n\n\n\n\n\n\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;
         return;
     }
     int turn(int turnno)
     {
         int die;
         char dummy;
-        clrscr();
-        cout<<"This is turn number "<<turnno<<"\nPress any key to proceed";
+        //clrscr();
+        cout<<"\n\n\n\n\nThis is turn number "<<turnno<<"\nPress any key to proceed";
         cin>>dummy;
-        vec<pair<int,int>>::iterator itr_p,itr_s,itr_l;
+        vector<pair<int,int>>::iterator itr_p,itr_s,itr_l;
         for(itr_p=player.begin();itr_p!=player.end();itr_p++)
         {
-            clrscr();
-            cout<<"Player "<<itr_p->first<<"\'s turn\nPress any key to roll dice\n";
+            //clrscr();
+            cout<<"\n\n\n\n\n\nPlayer "<<itr_p->first<<"\'s turn\nPress any key to roll dice\n";
             cin>>dummy;
-            die=(rand(6)+1);
+            die=rand();
+            die=die%6+1;
             cout<<"\nInitial position: "<<itr_p->second<<" Dice roll: "<<die;//<<"New position: "<<(itr_p->second+die);
             cout<<"\nPress any key to continue\n";
             cin>>dummy;
             itr_p->second+=die;
-            if(itr_p->second>=B.size)
+            if(itr_p->second>=size)
                 return itr_p->first;
-            for(itr_s=B.snake.begin();itr_s!=B.snake.end();itr_s++)
+            for(itr_s=snake.begin();itr_s!=snake.end();itr_s++)
             {    
                 if(itr_p->second==itr_s->second)
                 {
@@ -144,7 +160,7 @@ class game
                     break;
                 }
             }
-            for(itr_l=B.ladder.begin();itr_l!=B.ladder.end();itr_l++)
+            for(itr_l=ladder.begin();itr_l!=ladder.end();itr_l++)
             {
                 if(itr_p->second==itr_l->first)
                 {
@@ -161,22 +177,22 @@ class game
     public:
     game()
     {  
-        clrscr();
+        //clrscr();
         int noofplayers;
-        cout<<"Enter number of players\n";
+        cout<<"\n\n\n\n\n\nEnter number of players\n";
         cin>>noofplayers;
-        for(int i=1;i<=noofplayers) player.push_back(<i,0>);
+        for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));
         match();
     }
-}
+};
 int main()
 {
-    srand(6);
+    srand(59732893);
     int in=1;
     while(in)
     {
         game G;
-        cout<<"Thank you for playing snakes and ladders\nTo start a new game enter 1\nTo exit press any other key\n\n\nGame developed by Aditya Subramanian";
+        cout<<"Thank you for playing snakes and ladders\nTo start a new game enter 1\nTo exit press any other key\n\n\nGame developed by Aditya Subramanian\n\n\n\n";
         cin>>in;
     }
     return 0;
