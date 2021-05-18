@@ -60,17 +60,6 @@ class board                         //class for the board
         }
         return;
     }
-    void printboard()           //prints all the snakes and ladders
-    {
-        vector<pair<int,int>>::iterator itr;
-        cout<<"\nSnakes are: \n";
-        int slno=1;
-        for(itr=snake.begin();itr!=snake.end();itr++,slno++)   cout<<slno<<" "<<itr->second<<" to "<<itr->first<<"\n";
-        slno=1;
-        cout<<"\nLadders are: \n";
-        for(itr=ladder.begin();itr!=ladder.end();itr++,slno++)   cout<<slno<<" "<<itr->first<<" to "<<itr->second<<"\n";
-        return;
-    }
     void makeboard(int s)                       //function to make a custom board
     {
         int choice=0;
@@ -92,6 +81,18 @@ class board                         //class for the board
         int size=100;
         vector<pair<int,int>> snake,ladder;
     public:
+    void printboard()           //prints all the snakes and ladders
+    {
+        vector<pair<int,int>>::iterator itr;
+        cout<<"\nSize of the board is: "<<size;
+        cout<<"\nSnakes are: \n";
+        int slno=1;
+        for(itr=snake.begin();itr!=snake.end();itr++,slno++)   cout<<slno<<" "<<itr->second<<" to "<<itr->first<<"\n";
+        slno=1;
+        cout<<"\nLadders are: \n";
+        for(itr=ladder.begin();itr!=ladder.end();itr++,slno++)   cout<<slno<<" "<<itr->first<<" to "<<itr->second<<"\n";
+        return;
+    }
     board()
     {
         int choice;
@@ -113,7 +114,7 @@ class board                         //class for the board
 class game:public board
 {
     vector<pair<int,int>> player;
-    void match()                                        //a match
+    void match()                                        //function for a match
     {
         int t=2,k=turn(1);
         while(k==0)
@@ -125,7 +126,7 @@ class game:public board
         cout<<"\n\n\n\n\nThe winner is player "<<k<<"\nTotal turns played are "<<t;             //could add this in a destructor if you want to but I wrote it here
         return;
     }
-    int turn(int turnno)                                //a turn
+    int turn(int turnno)                                //function for a turn
     {
         int die;
         char dummy;
@@ -178,8 +179,8 @@ class game:public board
         cin>>noofplayers;
         if(noofplayers==0) ;        //if you dont wanna play the code wont run :0
         else {
-        for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));}
-        match();
+        for(int i=1;i<=noofplayers;++i) player.push_back(make_pair(i,0));cout<<"\n\nStarting match with the board: ";printboard();
+        match();}
     }
 };
 int main()                      //pretty much has nothing in it, just calls game's constructor
